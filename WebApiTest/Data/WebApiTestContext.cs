@@ -31,28 +31,42 @@ namespace WebApiTest.Data
 
             // string for the user account id
 
-            string userId = "d40ad5e3-58aa-4504-850d-7ef30b877a9a";
+            const string AdminID = "febc0557-59ea-41d9-bc30-9b1aeac7d9c5";
 
+            //const string RoleID = "4228a559-b351-42ea-8eaf-8830e8adfafc";
 
-            // a variable to reperesent a user
+            //modelBuilder.Entity<IdentityRole>().HasData(
+            //    new IdentityRole
+            //    {
+            //        Name = "Admin",
+            //        NormalizedName = "ADMIN",
+            //        Id = RoleID,
+            //        ConcurrencyStamp = "64524b67-1c15-448d-bccd-547a0101e91a"
+            //    }
+            //);
 
-            var user = new BlogUser
-            {
-                Id = userId,
-                Email = "test@test.com",
-                NormalizedEmail = "TEST@TEST.COM",
-                ConcurrencyStamp = "toast",
-                EmailConfirmed = true,
-                UserName = "test@test.com",
-                NormalizedUserName = "TEST@TEST.COM"
-            };
+            //BlogUser usr = new()
+            //{
+            //    Id = AdminID,
+            //    Email = "SeedData@SeedData.com",
+            //    NormalizedEmail = "SEEDDATA@SEEDDATA.COM",
+            //    EmailConfirmed = true,
+            //    UserName = "SeedData@SeedData.com",
+            //    NormalizedUserName = "SEEDDATA@SEEDDATA.COM"
+            //};
 
-            // set password
-            PasswordHasher<BlogUser> ph = new();
-            user.PasswordHash = ph.HashPassword(user, "Password123!");
+            //PasswordHasher<BlogUser> hasher = new();
+            //usr.PasswordHash = hasher.HashPassword(usr, "1Forest1!");
 
-            // seed user
-            modelBuilder.Entity<BlogUser>().HasData(user);
+            //modelBuilder.Entity<BlogUser>().HasData(usr);
+
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+            //    new IdentityUserRole<string>
+            //    {
+            //        RoleId = RoleID,
+            //        UserId = AdminID
+            //    }
+            //);
 
             // Add Content Data
             modelBuilder.Entity<Category>().HasData(
@@ -88,7 +102,7 @@ namespace WebApiTest.Data
                     ContentId = 1,
                     Title = "First Post",
                     Body = "Lorem ipsum and stuff",
-                    AuthorId = userId, // TODO: add in a base user to use
+                    //AuthorId = AdminID, // TODO: add in a base user to use
                     CreatedAt = new DateTime(2025, 02, 03),
                     UpdatedAt = new DateTime(2025, 02, 03),
                     Visibility = VisibilityStatus.Visible,

@@ -6,11 +6,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebApiTest.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialIdentity : Migration
+    public partial class RemovedAuthor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "Author",
+                table: "Content");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -219,6 +223,20 @@ namespace WebApiTest.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Author",
+                table: "Content",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.UpdateData(
+                table: "Content",
+                keyColumn: "ContentId",
+                keyValue: 1,
+                column: "Author",
+                value: "Jesse");
         }
     }
 }

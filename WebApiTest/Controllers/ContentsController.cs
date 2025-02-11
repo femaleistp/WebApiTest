@@ -23,7 +23,9 @@ namespace WebApiTest.Controllers
             _context = context;
         }
 
+
         // GET: api/Contents
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Content>>> GetContent()
         {
@@ -31,6 +33,7 @@ namespace WebApiTest.Controllers
         }
 
         // GET: api/Contents/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Content>> GetContent(int id)
         {

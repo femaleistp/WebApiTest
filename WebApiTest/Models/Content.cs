@@ -12,7 +12,7 @@ namespace WebApiTest.Models
         public string Body { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public string AuthorId { get; set; }
+        //public string AuthorId { get; set; }
         public VisibilityStatus Visibility { get; set; }
 
         [ForeignKey(nameof(Category.CategoryId))]
@@ -20,6 +20,6 @@ namespace WebApiTest.Models
 
         // navigation property
         public virtual Category? Category { get; set; }
-        public virtual BlogUser Author { get; set; }
+        //public virtual BlogUser Author { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using WebApiTest.Data;
 namespace WebApiTest.Migrations
 {
     [DbContext(typeof(WebApiTestContext))]
-    [Migration("20250204183913_InitialIdentity")]
-    partial class InitialIdentity
+    [Migration("20250211185048_RemovedAuthor")]
+    partial class RemovedAuthor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -274,10 +274,6 @@ namespace WebApiTest.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ContentId"));
 
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Body")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -308,7 +304,6 @@ namespace WebApiTest.Migrations
                         new
                         {
                             ContentId = 1,
-                            Author = "Jesse",
                             Body = "Lorem ipsum and stuff",
                             CategoryId = 3,
                             CreatedAt = new DateTime(2025, 2, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
