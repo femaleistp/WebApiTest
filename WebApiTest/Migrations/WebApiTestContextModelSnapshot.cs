@@ -238,7 +238,7 @@ namespace WebApiTest.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
 
                     b.HasData(
                         new
@@ -299,7 +299,7 @@ namespace WebApiTest.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Content");
+                    b.ToTable("Content", (string)null);
 
                     b.HasData(
                         new

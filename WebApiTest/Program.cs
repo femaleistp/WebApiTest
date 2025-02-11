@@ -50,17 +50,6 @@ namespace WebApiTest
             app.MapControllers();
             app.MapRazorPages();
 
-            Content test = new Content
-            {
-                ContentId = 1,
-                Title = "Toast",
-                Body = "This is some text",
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                Author = "Jesse",
-                Visibility = VisibilityStatus.Visible
-            };
-
             app.Run();
         }
     }
