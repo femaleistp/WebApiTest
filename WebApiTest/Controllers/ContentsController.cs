@@ -25,7 +25,6 @@ namespace WebApiTest.Controllers
 
 
         // GET: api/Contents
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Content>>> GetContent()
         {
@@ -33,8 +32,8 @@ namespace WebApiTest.Controllers
         }
 
         // GET: api/Contents/5
-        [AllowAnonymous]
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Content>> GetContent(int id)
         {
             var content = await _context.Content.FindAsync(id);

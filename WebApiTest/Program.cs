@@ -20,6 +20,7 @@ namespace WebApiTest
 
             // links up identity, and links it to the database
             builder.Services.AddDefaultIdentity<BlogUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<WebApiTestContext>();
 
             // Add services to the container.
