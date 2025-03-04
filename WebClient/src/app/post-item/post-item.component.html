@@ -1,10 +1,10 @@
-<pre>{{post | json}}</pre>
-<div class="post-item">
+<!--<pre>{{post | json}}</pre>-->
+<div class="post-item m-2 mb-4 bg-light p-2 border border-info">
   <h3> {{post.title}} </h3>
-  <h5>Updated At: {{post.updatedAt}}</h5>
-  <div class="post-controls">
-    <button class="btn btn-primary" (click)="onDelete()">Delete</button><br />
-    <button [routerLink]="['/post', post.contentId, 'edit']">Edit</button>
+  <h5>Updated At: {{post.updatedAt | date:'fullDate' }}</h5>
+  <div class="post-controls btn-group">
+    <button class="btn btn-sm btn-danger" (click)="onDelete()">Delete</button><br />
+    <button class="btn btn-sm btn-success" [routerLink]="['/post', post.contentId, 'edit']">Edit</button>
 
   </div>
   <p>
@@ -13,5 +13,5 @@
   <ul>
     <li>{{ post.category.categoryName}}</li>
   </ul>
-  <a [routerLink]="['/post', post.contentId]">Details</a>
+  <a class="btn btn-primary" [routerLink]="['/post', post.contentId]">Details</a>
 </div>
