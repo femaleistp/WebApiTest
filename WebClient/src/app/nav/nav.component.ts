@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 interface PageLink {
-  slug: string;
+  id: number;
   component: Component | undefined;
   displayName: string;
 }
@@ -15,22 +15,22 @@ interface PageLink {
 export class NavComponent {
   staticPages: PageLink[] = [
     {
-        slug: 'taco',
+        id: 1,
         component: undefined,
         displayName: 'Taco News'
     },
     {
-        slug: 'toast',
+        id: 2,
         component: undefined,
         displayName: 'Toast News'
     },
     {
-        slug: 'hello',
+        id: 3,
         component: undefined,
         displayName: 'Hello'
     },
     {
-        slug: 'hello-world',
+        id: 4,
         component: undefined,
         displayName: 'Hello World'
     }

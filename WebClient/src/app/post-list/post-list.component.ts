@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DataService, Page } from "../data.service";
+import { DataService, Post } from "../data.service";
 
 
 @Component({
@@ -9,9 +9,26 @@ import { DataService, Page } from "../data.service";
   styleUrl: './post-list.component.css'
 })
 export class PostListComponent {
-  pages: Page[];
+  posts: Post[] = [];
 
   constructor(private data: DataService) {
-    this.pages = this.data.pages;
+    this.data.getAllPosts().subscribe(data => {
+      this.posts = data;
+    });
   }
+  onDelete(id: number) {
+    console.log("I heard someone shouting at the clouds");
+
+    let deletedPost = this.posts.find(p => p.contentId == id);
+    console.log("found post", deletedPost);
+
+    if (deletedPost != undefined) {
+      console.log("deletedPost should be defined");
+      this.data.deletePost(deletedPost).subscribe(result => {
+        console.log("post deleted", result);
+        this.posts = this.posts.filter(p => p.contentId != id);
+      });
+    }
+  }
+
 }

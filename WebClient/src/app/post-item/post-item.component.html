@@ -1,0 +1,17 @@
+<pre>{{post | json}}</pre>
+<div class="post-item">
+  <h3> {{post.title}} </h3>
+  <h5>Updated At: {{post.updatedAt}}</h5>
+  <div class="post-controls">
+    <button class="btn btn-primary" (click)="onDelete()">Delete</button><br />
+    <button [routerLink]="['/post', post.contentId, 'edit']">Edit</button>
+
+  </div>
+  <p>
+    {{post.body}}
+  </p>
+  <ul>
+    <li>{{ post.category.categoryName}}</li>
+  </ul>
+  <a [routerLink]="['/post', post.contentId]">Details</a>
+</div>
