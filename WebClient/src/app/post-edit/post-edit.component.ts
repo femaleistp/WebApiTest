@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService, Post } from '../data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -27,6 +27,7 @@ export class PostEditComponent implements OnInit{
     }
   }
   isLoaded: boolean = false;
+  isEditing: boolean = false;
 
   postForm: FormGroup = new FormGroup({});
 
@@ -35,10 +36,10 @@ export class PostEditComponent implements OnInit{
     , private router: Router
     , private fb: FormBuilder
   ) {
+
     this.initForm();
   }
-  // 3/4/25 this works as a new form, tomorrow work on existing data tomorrow
-  // 3/4/25 how do we make it so we can select individual categories
+
   initForm() {
     this.postForm = this.fb.group({
       contentId: [0],
@@ -57,41 +58,89 @@ export class PostEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // get our id
-    
+    // get our id    
     this.route.paramMap.pipe(
       switchMap(params => {
+        //  if (params.get("id") == "create") {
+        //    // we are creating
+        //    console.log("hit");
+        //    return of({
+        //      contentId: 0,
+        //      title: "",
+        //      body: "",
+        //      createdAt: new Date(),
+        //      updatedAt: new Date(),
+        //      visibility: 0,
+        //      categoryId: 0,
+        //      category: {
+        //        categoryId: 0,
+        //        categoryName: "",
+        //        postedContent: []
+        //      }
+        //    })
+        //  } else {
         this.id = Number(params.get("id"));
+        this.isEditing = true;
         return this.data.getPostById(this.id);
+        //}
+
       })
     ).subscribe(result => {
       console.log(result);
       this.isLoaded = true;
-        this.post = result;
+      this.post = result;
+      this.loadForm();
     })
+  }
+
+  loadForm() {
+    this.postForm.patchValue({
+      title: this.post.title,
+      contentId: this.post.contentId,
+      body: this.post.body,
+      createdAt: this.post.createdAt,
+      updatedAt: this.post.updatedAt,
+      visibility: this.post.visibility,
+      categoryId: this.post.categoryId,
+      category: this.post.category
+    });
   }
 
   onSave() {
     // take the formgroup, read values, and then submit them to the data service.
     console.log(this.postForm.value);
     let savedPost: Post = {
-        contentId: this.postForm.value.contentId,
-        title: this.postForm.value.title,
-        body: this.postForm.value.body,
-        createdAt: this.postForm.value.createdAt,
-        updatedAt: this.postForm.value.updatedAt,
-        visibility: Number(this.postForm.value.visibility),
-        categoryId: this.postForm.value.categoryId,
-        category: this.postForm.value.category
+      contentId: this.postForm.value.contentId,
+      title: this.postForm.value.title,
+      body: this.postForm.value.body,
+      createdAt: this.postForm.value.createdAt,
+      updatedAt: this.postForm.value.updatedAt,
+      visibility: Number(this.postForm.value.visibility),
+      categoryId: this.postForm.value.categoryId,
+      category: this.postForm.value.category
     }
-    this.data.createPost(savedPost).subscribe(result => {
-      // success adding a new post
-      console.log("Added new post", result);
-    });
+
+    if (this.isEditing) {
+      this.data.updatePost(this.post.contentId, savedPost).subscribe(result => {
+        // success adding a new post
+        console.log("Updated post", result);
+        this.router.navigate(['post', this.id]);
+      })
+    } else {
+      this.data.createPost(savedPost).subscribe(result => {
+        // success adding a new post
+        console.log("Added new post", result);
+        this.router.navigate(['post', result.contentId]);
+      });
+    }
+
+
 
   }
 
   onClear() {
     // reset the form group
   }
+
+  
 }
