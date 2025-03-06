@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { DataService, Post } from "../data.service";
+import { BehaviorSubject } from "rxjs";
 
 
 @Component({
@@ -9,26 +10,10 @@ import { DataService, Post } from "../data.service";
   styleUrl: './post-list.component.css'
 })
 export class PostListComponent {
-  posts: Post[] = [];
+  posts: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);;
 
   constructor(private data: DataService) {
-    this.data.getAllPosts().subscribe(data => {
-      this.posts = data;
-    });
+    this.data.getAllPosts();
+    this.posts = this.data.posts$;
   }
-  onDelete(id: number) {
-    console.log("I heard someone shouting at the clouds");
-
-    let deletedPost = this.posts.find(p => p.contentId == id);
-    console.log("found post", deletedPost);
-
-    if (deletedPost != undefined) {
-      console.log("deletedPost should be defined");
-      this.data.deletePost(deletedPost).subscribe(result => {
-        console.log("post deleted", result);
-        this.posts = this.posts.filter(p => p.contentId != id);
-      });
-    }
-  }
-
 }

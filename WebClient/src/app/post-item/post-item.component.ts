@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Post } from '../data.service';
+import { DataService, Post } from '../data.service';
 
 // this is a dumb component
 
@@ -11,12 +11,10 @@ import { Post } from '../data.service';
 })
 export class PostItemComponent {
   @Input() post!: Post;
-  @Output() deletePost = new EventEmitter<number>();
 
-  constructor() { }
+  constructor(private data: DataService) { }
 
   onDelete() {
-    console.log("Shout at clouds");
-    this.deletePost.emit(this.post.contentId);
+    this.data.deletePostById(this.post.contentId);
   }
 }

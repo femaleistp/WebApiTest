@@ -58,39 +58,23 @@ export class PostEditComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    // get our id    
-    this.route.paramMap.pipe(
-      switchMap(params => {
-        //  if (params.get("id") == "create") {
-        //    // we are creating
-        //    console.log("hit");
-        //    return of({
-        //      contentId: 0,
-        //      title: "",
-        //      body: "",
-        //      createdAt: new Date(),
-        //      updatedAt: new Date(),
-        //      visibility: 0,
-        //      categoryId: 0,
-        //      category: {
-        //        categoryId: 0,
-        //        categoryName: "",
-        //        postedContent: []
-        //      }
-        //    })
-        //  } else {
-        this.id = Number(params.get("id"));
-        this.isEditing = true;
-        return this.data.getPostById(this.id);
-        //}
+    // get our id
+    //this.route.paramMap.pipe(
+    //  switchMap(params => {
+    //    this.id = Number(params.get("id"));
+    //    this.isEditing = true;
+    //    return this.data.getPostById(this.id);
+    //  })
+    //).subscribe(result => {
+    //  console.log(result);
+    //  this.isLoaded = true;
+    //  this.post = result;
+    //  this.loadForm();
+    //})
 
-      })
-    ).subscribe(result => {
-      console.log(result);
-      this.isLoaded = true;
-      this.post = result;
-      this.loadForm();
-    })
+    this.route.paramMap.subscribe(params => {
+      this.id = Number(params.get("id"));
+    });
   }
 
   loadForm() {
@@ -121,26 +105,19 @@ export class PostEditComponent implements OnInit{
     }
 
     if (this.isEditing) {
-      this.data.updatePost(this.post.contentId, savedPost).subscribe(result => {
-        // success adding a new post
-        console.log("Updated post", result);
-        this.router.navigate(['post', this.id]);
-      })
+      this.data.updatePost(this.post.contentId, savedPost)
+      this.router.navigate(['post', this.id]);
     } else {
-      this.data.createPost(savedPost).subscribe(result => {
-        // success adding a new post
-        console.log("Added new post", result);
-        this.router.navigate(['post', result.contentId]);
-      });
+      this.data.createPost(savedPost)
+      // this.router.navigate(['post', contentId]);
+      this.router.navigate(['post']);
+      }
     }
-
-
-
-  }
 
   onClear() {
     // reset the form group
+  } 
+
   }
 
-  
-}
+
